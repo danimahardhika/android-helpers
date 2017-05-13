@@ -1,5 +1,5 @@
 # Android Helpers
-[![](https://jitpack.io/v/danimahardhika/android-helpers.svg)](https://jitpack.io/#danimahardhika/android-helpers)
+[![](https://jitpack.io/v/danimahardhika/android-helpers.svg)](https://jitpack.io/#danimahardhika/android-helpers) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
 
 Android helpers collection that used for my projects.
 
@@ -23,7 +23,7 @@ dependencies {
 
 # License
 ```
-Copyright (c) 2014-2016 Dani Mahardhika
+Copyright (c) 2017 Dani Mahardhika
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
