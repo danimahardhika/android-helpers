@@ -1,2 +1,2 @@
-# android-helpers
-Android helpers collection
+# Android Helpers
+Android helpers collection that used for my projects.
