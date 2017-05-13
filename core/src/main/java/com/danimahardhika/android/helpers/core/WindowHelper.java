@@ -14,8 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.danimahardhika.helpers.collection.core.R;
-
 /*
  * Android Helpers
  *
@@ -87,22 +85,22 @@ public class WindowHelper {
         return size;
     }
 
-    public static void setupApplicationWindowColor(@NonNull Context context, @Nullable Drawable drawable, @ColorInt int color) {
+    public static void setupApplicationWindowColor(@NonNull Context context, String appName, @Nullable Drawable drawable, @ColorInt int color) {
         Bitmap bitmap = null;
         if (drawable != null) bitmap = BitmapHelper.toBitmap(drawable);
-        setupApplicationWindowColor(context, bitmap, color);
+        setupApplicationWindowColor(context, appName, bitmap, color);
     }
 
-    public static void setupApplicationWindowColor(@NonNull Context context, @DrawableRes int resId, @ColorInt int color) {
+    public static void setupApplicationWindowColor(@NonNull Context context, String appName, @DrawableRes int resId, @ColorInt int color) {
         Drawable drawable = DrawableHelper.get(context, resId);
         Bitmap bitmap = BitmapHelper.toBitmap(drawable);
-        setupApplicationWindowColor(context, bitmap, color);
+        setupApplicationWindowColor(context, appName, bitmap, color);
     }
 
-    public static void setupApplicationWindowColor(@NonNull Context context, @Nullable Bitmap bitmap, @ColorInt int color) {
+    public static void setupApplicationWindowColor(@NonNull Context context, String appName, @Nullable Bitmap bitmap, @ColorInt int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ((AppCompatActivity) context).setTaskDescription(new ActivityManager.TaskDescription (
-                    context.getResources().getString(R.string.app_name),
+                    appName,
                     bitmap,
                     color));
         }

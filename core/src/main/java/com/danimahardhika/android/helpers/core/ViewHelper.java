@@ -21,8 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.danimahardhika.helpers.collection.core.R;
-
 /*
  * Android Helpers
  *
