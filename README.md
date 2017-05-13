@@ -16,7 +16,7 @@ Add the dependency
 ```Gradle
 dependencies {
     compile 'com.github.danimahardhika.android-helpers:core:$versionNumber'
-    compile 'com.github.danimahardhika.android-helpers:$versionNumber'
+    compile 'com.github.danimahardhika.android-helpers:license:$versionNumber'
     compile 'com.github.danimahardhika.android-helpers:permission:$versionNumber'
 }
 ```
