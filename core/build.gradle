@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.github.danimahardhika'
+
+android {
+    compileSdkVersion rootProject.ext.CompileSdk
+    buildToolsVersion rootProject.ext.BuildTools
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.MinSdk
+        targetSdkVersion rootProject.ext.TargetSdk
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:appcompat-v7:$rootProject.ext.SupportLibrary"
+    compile "com.android.support:recyclerview-v7:$rootProject.ext.SupportLibrary"
+    compile "com.android.support:design:$rootProject.ext.SupportLibrary"
+}
