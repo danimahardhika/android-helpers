@@ -38,12 +38,20 @@ public class AnimationHelper {
         return new Animator(view, Type.FADE);
     }
 
-    public static Animator slideDown(@NonNull View view) {
-        return new Animator(view, Type.SLIDE_DOWN);
+    public static Animator slideDownIn(@NonNull View view) {
+        return new Animator(view, Type.SLIDE_DOWN_IN);
     }
 
-    public static Animator slideUp(@NonNull View view) {
-        return new Animator(view, Type.SLIDE_UP);
+    public static Animator slideUpIn(@NonNull View view) {
+        return new Animator(view, Type.SLIDE_UP_IN);
+    }
+
+    public static Animator slideDownOut(@NonNull View view) {
+        return new Animator(view, Type.SLIDE_DOWN_OUT);
+    }
+
+    public static Animator slideUpOut(@NonNull View view) {
+        return new Animator(view, Type.SLIDE_UP_OUT);
     }
 
     public static class Animator {
@@ -86,10 +94,12 @@ public class AnimationHelper {
                 case FADE:
                     animateFade(this);
                     break;
-                case SLIDE_DOWN:
+                case SLIDE_DOWN_IN:
+                case SLIDE_DOWN_OUT:
                     animateSlideDown(this);
                     break;
-                case SLIDE_UP:
+                case SLIDE_UP_IN:
+                case SLIDE_UP_OUT:
                     animateSlideUp(this);
                     break;
                 default:
@@ -136,13 +146,22 @@ public class AnimationHelper {
         Point point = WindowHelper.getScreenSize(context);
 
         animator.view.animate().cancel();
-        animator.view.setY(-point.y);
-        animator.view.setVisibility(View.VISIBLE);
+        if (animator.type == Type.SLIDE_DOWN_IN) {
+            animator.view.setY(-point.y);
+            animator.view.setVisibility(View.VISIBLE);
 
-        animator.view.animate()
-                .translationY(originalPosition)
-                .setInterpolator(animator.interpolator)
-                .setListener(animator.listener);
+            animator.view.animate()
+                    .translationY(originalPosition)
+                    .setInterpolator(animator.interpolator)
+                    .setListener(animator.listener);
+        } else if (animator.type == Type.SLIDE_DOWN_OUT) {
+            animator.view.setVisibility(View.VISIBLE);
+
+            animator.view.animate()
+                    .translationY(point.y)
+                    .setInterpolator(animator.interpolator)
+                    .setListener(animator.listener);
+        }
     }
 
     private static void animateSlideUp(Animator animator) {
@@ -151,19 +170,30 @@ public class AnimationHelper {
         Point point = WindowHelper.getScreenSize(context);
 
         animator.view.animate().cancel();
-        animator.view.setY(point.y);
-        animator.view.setVisibility(View.VISIBLE);
+        if (animator.type == Type.SLIDE_UP_IN) {
+            animator.view.setY(point.y);
+            animator.view.setVisibility(View.VISIBLE);
 
-        animator.view.animate()
-                .translationY(originalPosition)
-                .setInterpolator(animator.interpolator)
-                .setListener(animator.listener);
+            animator.view.animate()
+                    .translationY(originalPosition)
+                    .setInterpolator(animator.interpolator)
+                    .setListener(animator.listener);
+        } else if (animator.type == Type.SLIDE_UP_OUT) {
+            animator.view.setVisibility(View.VISIBLE);
+
+            animator.view.animate()
+                    .translationY(-point.y)
+                    .setInterpolator(animator.interpolator)
+                    .setListener(animator.listener);
+        }
     }
 
     private enum Type {
         SHOW,
         FADE,
-        SLIDE_DOWN,
-        SLIDE_UP
+        SLIDE_DOWN_IN,
+        SLIDE_UP_IN,
+        SLIDE_DOWN_OUT,
+        SLIDE_UP_OUT
     }
 }
