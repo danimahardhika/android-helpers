@@ -1,1 +1,1 @@
-include ':permission', ':license', ':core'
+include ':permission', ':license', ':core', ':animation'
