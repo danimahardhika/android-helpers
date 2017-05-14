@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <bool name="android_helpers_tablet_mode">false</bool>
+
+</resources>

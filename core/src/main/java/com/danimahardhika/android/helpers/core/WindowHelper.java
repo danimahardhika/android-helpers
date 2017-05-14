@@ -2,7 +2,9 @@ package com.danimahardhika.android.helpers.core;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -33,6 +35,58 @@ import android.view.WindowManager;
  */
 
 public class WindowHelper {
+
+    public enum NavigationBarTranslucent {
+        PORTRAIT_LANDSCAPE,
+        PORTRAIT_ONLY,
+        LANDSCAPE_ONLY
+    }
+
+    public static void resetNavigationBarTranslucent(@NonNull Context context, @NonNull NavigationBarTranslucent navigationBarTranslucent) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            boolean tabletMode = context.getResources().getBoolean(R.bool.android_helpers_tablet_mode);
+            int orientation = context.getResources().getConfiguration().orientation;
+
+            switch (navigationBarTranslucent) {
+                case PORTRAIT_ONLY:
+                    if (tabletMode || orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        ((AppCompatActivity) context).getWindow().addFlags(
+                                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    } else {
+                        ((AppCompatActivity) context).getWindow().clearFlags(
+                                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                        ColorHelper.setNavigationBarColor(context, Color.BLACK);
+                    }
+                    break;
+                case LANDSCAPE_ONLY:
+                    if (tabletMode || orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        ((AppCompatActivity) context).getWindow().addFlags(
+                                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    } else {
+                        ((AppCompatActivity) context).getWindow().clearFlags(
+                                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                        ColorHelper.setNavigationBarColor(context, Color.BLACK);
+                    }
+                    break;
+                case PORTRAIT_LANDSCAPE:
+                    ((AppCompatActivity) context).getWindow().addFlags(
+                            WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    break;
+                default:
+                    ((AppCompatActivity) context).getWindow().addFlags(
+                            WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    break;
+
+            }
+        }
+    }
+
+    public static void disableTransucentNavigationBar(@NonNull Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ((AppCompatActivity) context).getWindow().clearFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
 
     public static int getStatusBarHeight(@NonNull Context context) {
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
