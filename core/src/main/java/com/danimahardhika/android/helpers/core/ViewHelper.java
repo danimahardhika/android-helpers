@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 /*
@@ -96,14 +95,14 @@ public class ViewHelper {
         }
     }
 
-    public static void setSearchViewSearchIcon(@Nullable SearchView searchView, @Nullable Drawable drawable) {
-        if (searchView == null) return;
+    public static void setSearchViewSearchIcon(@Nullable View view, @Nullable Drawable drawable) {
+        if (view == null) return;
 
-        ImageView searchIcon = (ImageView) searchView.findViewById(
+        ImageView searchIcon = (ImageView) view.findViewById(
                 android.support.v7.appcompat.R.id.search_mag_icon);
         if (searchIcon == null) return;
 
-        ViewGroup viewGroup = (ViewGroup) searchView.getParent();
+        ViewGroup viewGroup = (ViewGroup) view.getParent();
         if (viewGroup == null) return;
 
         if (drawable == null) {
