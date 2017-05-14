@@ -2,9 +2,11 @@ package com.danimahardhika.android.helpers.core;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.internal.NavigationMenuView;
@@ -95,6 +97,21 @@ public class ViewHelper {
         }
     }
 
+    public static void setSearchViewBackgroundColor(@Nullable View view, @ColorInt int color) {
+        if (view == null) return;
+
+        View background = view.findViewById(android.support.v7.appcompat.R.id.search_plate);
+        if (background != null) view.setBackgroundColor(color);
+    }
+
+    public static void setSearchViewSearchIcon(@Nullable View view, @DrawableRes int resId) {
+        if (view == null) return;
+
+        Context context = ContextHelper.getBaseContext(view);
+        Drawable drawable = DrawableHelper.get(context, resId);
+        setSearchViewSearchIcon(view, drawable);
+    }
+
     public static void setSearchViewSearchIcon(@Nullable View view, @Nullable Drawable drawable) {
         if (view == null) return;
 
@@ -102,10 +119,10 @@ public class ViewHelper {
                 android.support.v7.appcompat.R.id.search_mag_icon);
         if (searchIcon == null) return;
 
-        ViewGroup viewGroup = (ViewGroup) view.getParent();
-        if (viewGroup == null) return;
-
         if (drawable == null) {
+            ViewGroup viewGroup = (ViewGroup) view.getParent();
+            if (viewGroup == null) return;
+
             viewGroup.removeView(searchIcon);
             viewGroup.addView(searchIcon);
 
@@ -117,6 +134,38 @@ public class ViewHelper {
         }
 
         searchIcon.setImageDrawable(drawable);
+    }
+
+    public static void setSearchViewCloseIcon(@Nullable View view, @DrawableRes int resId) {
+        if (view == null) return;
+
+        Context context = ContextHelper.getBaseContext(view);
+        Drawable drawable = DrawableHelper.get(context, resId);
+        setSearchViewCloseIcon(view, drawable);
+    }
+
+    public static void setSearchViewCloseIcon(@Nullable View view, @Nullable Drawable drawable) {
+        if (view == null) return;
+
+        ImageView closeIcon = (ImageView) view.findViewById(
+                android.support.v7.appcompat.R.id.search_close_btn);
+        if (closeIcon != null) {
+            if (drawable == null) {
+                ViewGroup viewGroup = (ViewGroup) view.getParent();
+                if (viewGroup == null) return;
+
+                viewGroup.removeView(closeIcon);
+                viewGroup.addView(closeIcon);
+
+                closeIcon.setAdjustViewBounds(true);
+                closeIcon.setMaxWidth(0);
+                closeIcon.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+            }
+
+            closeIcon.setImageDrawable(drawable);
+        }
     }
 
     public static void hideNavigationViewScrollBar(@NonNull NavigationView navigationView) {
