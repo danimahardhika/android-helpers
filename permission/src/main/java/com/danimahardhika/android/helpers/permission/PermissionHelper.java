@@ -64,4 +64,24 @@ public class PermissionHelper {
                             Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionCode.STORAGE);
         }
     }
+
+    public static boolean isLocationGranted(@NonNull Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int coarse = ActivityCompat.checkSelfPermission(
+                    context, Manifest.permission.ACCESS_COARSE_LOCATION);
+            int fine = ActivityCompat.checkSelfPermission(
+                    context, Manifest.permission.ACCESS_FINE_LOCATION);
+            return coarse == PackageManager.PERMISSION_GRANTED &&
+                    fine == PackageManager.PERMISSION_GRANTED;
+        }
+        return true;
+    }
+
+    public static void requestLocation(@NonNull Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION}, PermissionCode.LOCATION);
+        }
+    }
 }
