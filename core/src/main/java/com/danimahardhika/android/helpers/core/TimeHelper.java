@@ -1,6 +1,8 @@
 package com.danimahardhika.android.helpers.core;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,10 +36,16 @@ public class TimeHelper {
         return milli / 60 / 1000;
     }
 
-    public static String getDateTime() {
-        SimpleDateFormat simpleDateFormat = getDefaultDateTimeFormat();
+    public static String getShortDateTime() {
+        SimpleDateFormat dateFormat = getDefaultShortDateTimeFormat();
         Date date = new Date();
-        return simpleDateFormat.format(date);
+        return dateFormat.format(date);
+    }
+
+    public static String getLongDateTime() {
+        SimpleDateFormat dateFormat = getDefaultLongDateTimeFormat();
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 
     public static String getDateTime(@NonNull SimpleDateFormat simpleDateFormat) {
@@ -45,8 +53,49 @@ public class TimeHelper {
         return simpleDateFormat.format(date);
     }
 
+    public static String getDisplayDateTime(String datetime, @NonNull SimpleDateFormat simpleDateFormat) {
+        return getDisplayDate(datetime, simpleDateFormat) +", "+ getDisplayTime(datetime, simpleDateFormat);
+    }
+
+    private static String getDisplayDate(String datetime, @NonNull SimpleDateFormat simpleDateFormat) {
+        Date date = parse(simpleDateFormat, datetime);
+        SimpleDateFormat formatter =  new SimpleDateFormat(
+                getDefaultDisplayDateFormat(), Locale.getDefault());
+        return formatter.format(date);
+    }
+
+    private static String getDisplayTime(String datetime, @NonNull SimpleDateFormat simpleDateFormat) {
+        Date date = parse(simpleDateFormat, datetime);
+        SimpleDateFormat formatter =  new SimpleDateFormat(
+                getDefaultDisplayTimeFormat(), Locale.getDefault());
+        return formatter.format(date).replace("am", "AM").replace("pm", "PM");
+    }
+
+    @Nullable
+    private static Date parse(SimpleDateFormat simpleDateFormat, String datetime) {
+        try {
+            return simpleDateFormat.parse(datetime);
+        } catch(Exception e){
+            Log.e("TimeHelper", Log.getStackTraceString(e));
+            return null;
+        }
+    }
+
+    private static String getDefaultDisplayDateFormat() {
+        return "MMM dd yyyy";
+    }
+
+    private static String getDefaultDisplayTimeFormat() {
+        return "hh:mm a";
+    }
+
     @NonNull
-    private static SimpleDateFormat getDefaultDateTimeFormat() {
+    private static SimpleDateFormat getDefaultLongDateTimeFormat() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS", Locale.getDefault());
+    }
+
+    @NonNull
+    private static SimpleDateFormat getDefaultShortDateTimeFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
     }
 }
