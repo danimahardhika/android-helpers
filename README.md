@@ -22,6 +22,43 @@ dependencies {
 }
 ```
 
+# Core
+Every method can be accessed in static way
+* BitmapHelper
+* ColorHelper
+* ContextHelper
+* DrawableHelper
+* FileHelper
+* ListHelper
+* SoftKeyboardHelper
+* TimeHelper
+* UnitHelper
+* ViewHelper
+* WindowHelper
+
+# Animation
+Every method can be accessed in static way
+* AnimationHelper
+
+# License
+* LicenseHelper
+```java
+LicenseHelper helper = new LicenseHelper(context);
+helper.run(licenseKey, salt, callback);
+```
+Don't forget to destroy license helper inside `onDestroy()` method
+```java
+@Override
+protected void onDestroy() {
+    helper.destroy();
+    super.onDestroy();
+}
+```
+
+# Permission
+Every method can be accessed in static way
+* PermissionHelper
+
 # License
 ```
 Copyright (c) 2017 Dani Mahardhika
