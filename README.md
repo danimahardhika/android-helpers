@@ -58,7 +58,7 @@ AnimationHelper.fade(view)
     .start();
 ```
 
-# License
+# License Checker
 * LicenseHelper
 ```java
 LicenseHelper helper = new LicenseHelper(context);
