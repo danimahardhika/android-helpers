@@ -39,6 +39,24 @@ Every method can be accessed in static way
 # Animation
 Every method can be accessed in static way
 * AnimationHelper
+```java
+AnimationHelper.fade(view)
+    .interpolator(new LinearOutSlowInInterpolator())
+    .duration(500)
+    .callback(new AnimationHelper.Callback() {
+    
+        @Override
+        public void onAnimationStart() {
+            //Do something
+        }
+
+        @Override
+        public void onAnimationEnd() {
+            //Do something
+        }
+    })
+    .start();
+```
 
 # License
 * LicenseHelper
