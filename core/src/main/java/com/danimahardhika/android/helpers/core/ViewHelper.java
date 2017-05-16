@@ -122,7 +122,7 @@ public class ViewHelper {
         if (searchIcon == null) return;
 
         if (drawable == null) {
-            ViewGroup viewGroup = (ViewGroup) view.getParent();
+            ViewGroup viewGroup = (ViewGroup) searchIcon.getParent();
             if (viewGroup == null) return;
 
             viewGroup.removeView(searchIcon);
@@ -153,7 +153,7 @@ public class ViewHelper {
                 android.support.v7.appcompat.R.id.search_close_btn);
         if (closeIcon != null) {
             if (drawable == null) {
-                ViewGroup viewGroup = (ViewGroup) view.getParent();
+                ViewGroup viewGroup = (ViewGroup) closeIcon.getParent();
                 if (viewGroup == null) return;
 
                 viewGroup.removeView(closeIcon);
