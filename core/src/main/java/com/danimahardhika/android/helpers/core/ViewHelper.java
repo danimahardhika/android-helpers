@@ -96,11 +96,14 @@ public class ViewHelper {
         }
     }
 
-    public static void setSearchViewBackgroundColor(@Nullable View view, @ColorInt int color) {
-        if (view == null) return;
-
-        View background = view.findViewById(android.support.v7.appcompat.R.id.search_plate);
-        if (background != null) view.setBackgroundColor(color);
+    public static void setSearchViewBackgroundColor(@Nullable View view, int color) {
+        if (view != null) {
+            View background = view.findViewById(android.support.v7.appcompat.R.id.search_plate);
+            if (background != null) {
+                Context context = ContextHelper.getBaseContext(view);
+                background.setBackgroundColor(ColorHelper.get(context, color));
+            }
+        }
     }
 
     public static void setSearchViewSearchIcon(@Nullable View view, @DrawableRes int resId) {
