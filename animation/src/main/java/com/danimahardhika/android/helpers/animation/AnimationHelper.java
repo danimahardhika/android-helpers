@@ -303,7 +303,7 @@ public class AnimationHelper {
         }
 
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.android_helpers_animation_slide_up_in);
-        if (animator.type == Type.SLIDE_UP_IN) {
+        if (animator.type == Type.SLIDE_UP_OUT) {
             animation = AnimationUtils.loadAnimation(context, R.anim.android_helpers_animation_slide_up_out);
         }
 
