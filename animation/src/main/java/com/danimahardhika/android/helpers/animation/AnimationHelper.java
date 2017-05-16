@@ -2,9 +2,14 @@ package com.danimahardhika.android.helpers.animation;
 
 import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 
 /*
  * Android Helpers
@@ -36,6 +41,22 @@ public class AnimationHelper {
 
     public static Animator fade(@NonNull View view) {
         return new Animator(view, Type.FADE);
+    }
+
+    public static ViewAnimator slideDownIn(@NonNull View view) {
+        return new ViewAnimator(view, Type.SLIDE_DOWN_IN);
+    }
+
+    public static ViewAnimator slideDownOut(@NonNull View view) {
+        return new ViewAnimator(view, Type.SLIDE_DOWN_OUT);
+    }
+
+    public static ViewAnimator slideUpIn(@NonNull View view) {
+        return new ViewAnimator(view, Type.SLIDE_UP_IN);
+    }
+
+    public static ViewAnimator slideUpOut(@NonNull View view) {
+        return new ViewAnimator(view, Type.SLIDE_UP_OUT);
     }
 
     public static class Animator {
@@ -178,10 +199,160 @@ public class AnimationHelper {
                 });
     }
 
+    public static class ViewAnimator {
+
+        private View view;
+        private Type type;
+        private int duration;
+        private Interpolator interpolator;
+        private Callback callback;
+
+        private ViewAnimator(@NonNull View view, Type type) {
+            this.view = view;
+            this.type = type;
+            this.duration = 200;
+            this.interpolator = new DecelerateInterpolator();
+        }
+
+        public ViewAnimator duration(int duration) {
+            this.duration = duration;
+            return this;
+        }
+
+        public ViewAnimator interpolator(@NonNull Interpolator interpolator) {
+            this.interpolator = interpolator;
+            return this;
+        }
+
+
+        public ViewAnimator callback(@NonNull Callback callback) {
+            this.callback = callback;
+            return this;
+        }
+
+        public void start() {
+            switch (type) {
+                case SLIDE_DOWN_IN:
+                case SLIDE_DOWN_OUT:
+                    animateSlideDown(this);
+                    break;
+                case SLIDE_UP_IN:
+                case SLIDE_UP_OUT:
+                    animateSlideUp(this);
+                    break;
+                default:
+                    animateSlideDown(this);
+                    break;
+            }
+        }
+    }
+
+    private static void animateSlideDown(final ViewAnimator animator) {
+        Context context = animator.view.getContext();
+        if (context instanceof ContextThemeWrapper) {
+            context = ((ContextThemeWrapper) animator.view.getContext()).getBaseContext();
+        }
+
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.android_helpers_animation_slide_down_in);
+        if (animator.type == Type.SLIDE_DOWN_OUT) {
+            animation = AnimationUtils.loadAnimation(context, R.anim.android_helpers_animation_slide_down_out);
+        }
+
+        animation.setInterpolator(animator.interpolator);
+        animation.setDuration(animator.duration);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+                if (animator.type == Type.SLIDE_DOWN_IN) {
+                    animator.view.setVisibility(View.GONE);
+                } else {
+                    animator.view.setVisibility(View.VISIBLE);
+                }
+
+                if (animator.callback != null) animator.callback.onAnimationStart();
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                if (animator.type == Type.SLIDE_DOWN_IN) {
+                    animator.view.setVisibility(View.VISIBLE);
+                } else {
+                    animator.view.setVisibility(View.GONE);
+                }
+
+                if (animator.callback != null) animator.callback.onAnimationEnd();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        if (animator.view.getAnimation() != null)
+            animator.view.getAnimation().cancel();
+
+        animator.view.startAnimation(animation);
+    }
+
+    private static void animateSlideUp(final ViewAnimator animator) {
+        Context context = animator.view.getContext();
+        if (context instanceof ContextThemeWrapper) {
+            context = ((ContextThemeWrapper) animator.view.getContext()).getBaseContext();
+        }
+
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.android_helpers_animation_slide_up_in);
+        if (animator.type == Type.SLIDE_UP_IN) {
+            animation = AnimationUtils.loadAnimation(context, R.anim.android_helpers_animation_slide_up_out);
+        }
+
+        animation.setInterpolator(animator.interpolator);
+        animation.setDuration(animator.duration);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+                if (animator.type == Type.SLIDE_UP_IN) {
+                    animator.view.setVisibility(View.GONE);
+                } else {
+                    animator.view.setVisibility(View.VISIBLE);
+                }
+
+                if (animator.callback != null) animator.callback.onAnimationStart();
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                if (animator.type == Type.SLIDE_UP_IN) {
+                    animator.view.setVisibility(View.VISIBLE);
+                } else {
+                    animator.view.setVisibility(View.GONE);
+                }
+
+                if (animator.callback != null) animator.callback.onAnimationEnd();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        if (animator.view.getAnimation() != null)
+            animator.view.getAnimation().cancel();
+
+        animator.view.startAnimation(animation);
+    }
+
     private enum Type {
         SHOW,
         HIDE,
-        FADE
+        FADE,
+        SLIDE_DOWN_IN,
+        SLIDE_DOWN_OUT,
+        SLIDE_UP_IN,
+        SLIDE_UP_OUT
     }
 
     public interface Callback {
