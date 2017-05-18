@@ -109,7 +109,7 @@ public class AnimationHelper {
     }
 
     private static void animateShow(final Animator animator) {
-        animator.view.animate().cancel();
+        animator.view.clearAnimation();
         animator.view.setScaleX(0f);
         animator.view.setScaleY(0f);
         animator.view.setAlpha(0f);
@@ -138,7 +138,7 @@ public class AnimationHelper {
     }
 
     private static void animateHide(final Animator animator) {
-        animator.view.animate().cancel();
+        animator.view.clearAnimation();
         animator.view.setScaleX(1f);
         animator.view.setScaleY(1f);
         animator.view.setAlpha(1f);
@@ -171,7 +171,7 @@ public class AnimationHelper {
         final float startAlpha = animator.view.getVisibility() == View.VISIBLE ? 1f : 0f;
         final float endAlpha = animator.view.getVisibility() == View.VISIBLE ? 0f : 1f;
 
-        animator.view.animate().cancel();
+        animator.view.clearAnimation();
         animator.view.setAlpha(startAlpha);
         animator.view.setVisibility(View.VISIBLE);
 
@@ -290,9 +290,7 @@ public class AnimationHelper {
             }
         });
 
-        if (animator.view.getAnimation() != null)
-            animator.view.getAnimation().cancel();
-
+        animator.view.clearAnimation();
         animator.view.startAnimation(animation);
     }
 
@@ -339,9 +337,7 @@ public class AnimationHelper {
             }
         });
 
-        if (animator.view.getAnimation() != null)
-            animator.view.getAnimation().cancel();
-
+        animator.view.clearAnimation();
         animator.view.startAnimation(animation);
     }
 
