@@ -9,6 +9,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.internal.NavigationMenuView;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,13 +47,23 @@ public class ViewHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Context context = ContextHelper.getBaseContext(toolbar);
             int statusBarSize = WindowHelper.getStatusBarHeight(context);
+
+            if (toolbar.getLayoutParams() instanceof AppBarLayout.LayoutParams) {
+                AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
+                params.setMargins(
+                        params.leftMargin,
+                        params.topMargin + statusBarSize,
+                        params.rightMargin,
+                        params.bottomMargin);
+                return;
+            }
+
             toolbar.setPadding(
                     toolbar.getPaddingLeft(),
                     toolbar.getPaddingTop() + statusBarSize,
                     toolbar.getPaddingRight(),
                     toolbar.getPaddingBottom()
             );
-
             toolbar.getLayoutParams().height = getToolbarHeight(context) + statusBarSize;
         }
     }
@@ -122,7 +133,7 @@ public class ViewHelper {
         if (searchIcon == null) return;
 
         if (drawable == null) {
-            ViewGroup viewGroup = (ViewGroup) searchIcon.getParent();
+            ViewGroup viewGroup = (ViewGroup) view.getParent();
             if (viewGroup == null) return;
 
             viewGroup.removeView(searchIcon);
@@ -153,7 +164,7 @@ public class ViewHelper {
                 android.support.v7.appcompat.R.id.search_close_btn);
         if (closeIcon != null) {
             if (drawable == null) {
-                ViewGroup viewGroup = (ViewGroup) closeIcon.getParent();
+                ViewGroup viewGroup = (ViewGroup) view.getParent();
                 if (viewGroup == null) return;
 
                 viewGroup.removeView(closeIcon);
