@@ -73,6 +73,8 @@ protected void onDestroy() {
 }
 ```
 
+You can see LicenseCallback sample from [here](https://github.com/danimahardhika/wallpaperboard/blob/master/library/src/main/java/com/dm/wallpaper/board/helpers/LicenseCallbackHelper.java).
+
 # Permission
 Every method can be accessed in static way
 * PermissionHelper
