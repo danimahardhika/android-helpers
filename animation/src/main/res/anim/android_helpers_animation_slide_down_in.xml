@@ -2,6 +2,6 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <translate
-        android:fromYDelta="-100%"
+        android:fromYDelta="-200%"
         android:toYDelta="0%" />
 </set>
