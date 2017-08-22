@@ -21,6 +21,15 @@ dependencies {
     compile 'com.github.danimahardhika.android-helpers:permission:$versionNumber'
 }
 ```
+Or use a snapshot
+```Gradle
+dependencies {
+    compile 'com.github.danimahardhika.android-helpers:core:-SNAPSHOT'
+    compile 'com.github.danimahardhika.android-helpers:animation:-SNAPSHOT'
+    compile 'com.github.danimahardhika.android-helpers:license:-SNAPSHOT'
+    compile 'com.github.danimahardhika.android-helpers:permission:-SNAPSHOT'
+}
+```
 
 # Core
 Every method can be accessed in static way
