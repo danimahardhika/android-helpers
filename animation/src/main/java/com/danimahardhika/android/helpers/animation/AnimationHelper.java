@@ -1,10 +1,14 @@
 package com.danimahardhika.android.helpers.animation;
 
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.content.Context;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v7.view.ContextThemeWrapper;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -43,6 +47,10 @@ public class AnimationHelper {
         return new Animator(view, Type.FADE);
     }
 
+    public static Animator setBackgroundColor(@NonNull View view, @ColorInt int colorFrom, @ColorInt int colorTo) {
+        return new Animator(view, colorFrom, colorTo, Type.BACKGROUND_COLOR);
+    }
+
     public static ViewAnimator slideDownIn(@NonNull View view) {
         return new ViewAnimator(view, Type.SLIDE_DOWN_IN);
     }
@@ -63,12 +71,23 @@ public class AnimationHelper {
 
         private final View view;
         private final Type type;
+        private int fromColor;
+        private int toColor;
         private int duration;
         private TimeInterpolator interpolator;
         private Callback callback;
 
         private Animator(@NonNull View view, Type type) {
             this.view = view;
+            this.type = type;
+            this.duration = 200;
+            this.interpolator = new DecelerateInterpolator();
+        }
+
+        private Animator(@NonNull View view, int fromColor, int toColor, Type type) {
+            this.view = view;
+            this.fromColor = fromColor;
+            this.toColor = toColor;
             this.type = type;
             this.duration = 200;
             this.interpolator = new DecelerateInterpolator();
@@ -86,6 +105,11 @@ public class AnimationHelper {
 
 
         public Animator callback(@NonNull Callback callback) {
+            if (this.type == Type.BACKGROUND_COLOR) {
+                Log.e("AnimationHelper", "changeBackgroundColor doesn\'t support callback, it will be ignored");
+                return this;
+            }
+
             this.callback = callback;
             return this;
         }
@@ -101,11 +125,25 @@ public class AnimationHelper {
                 case FADE:
                     animateFade(this);
                     break;
+                case BACKGROUND_COLOR:
+                    setBackgroundColor(this);
+                    break;
                 default:
                     animateFade(this);
                     break;
             }
         }
+    }
+
+    private static void setBackgroundColor(final Animator animator) {
+        ObjectAnimator objectAnimator = ObjectAnimator.ofObject(
+                animator.view, "backgroundColor", new ArgbEvaluator(),
+                animator.fromColor, animator.toColor);
+
+        animator.view.clearAnimation();
+        objectAnimator.setDuration(animator.duration);
+        objectAnimator.setInterpolator(animator.interpolator);
+        objectAnimator.start();
     }
 
     private static void animateShow(final Animator animator) {
@@ -348,7 +386,8 @@ public class AnimationHelper {
         SLIDE_DOWN_IN,
         SLIDE_DOWN_OUT,
         SLIDE_UP_IN,
-        SLIDE_UP_OUT
+        SLIDE_UP_OUT,
+        BACKGROUND_COLOR
     }
 
     public interface Callback {
