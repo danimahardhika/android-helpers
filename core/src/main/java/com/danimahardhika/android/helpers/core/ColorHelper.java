@@ -124,11 +124,19 @@ public class ColorHelper {
         return title < Color.WHITE;
     }
 
-    public static void setupStatusBarIconColor(@NonNull Context context) {
+    public static void setupStatusBarIconColor(Context context) {
+        if (context == null) {
+            Log.e("ColorHelper", "setupStatusBarIconColor() context is null");
+            return;
+        }
         setupStatusBarIconColor(context, isLightToolbar(context));
     }
 
-    public static void setupStatusBarIconColor(@NonNull Context context, boolean isLightToolbar) {
+    public static void setupStatusBarIconColor(Context context, boolean isLightToolbar) {
+        if (context == null) {
+            Log.e("ColorHelper", "setupStatusBarIconColor() context is null");
+            return;
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (((AppCompatActivity) context).getWindow() == null) {
                 Log.e("ColorHelper", "setupStatusBarIconColor() getWindow() returns null");
