@@ -12,6 +12,7 @@ import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
@@ -124,10 +125,19 @@ public class ColorHelper {
     }
 
     public static void setupStatusBarIconColor(@NonNull Context context) {
+        setupStatusBarIconColor(context, isLightToolbar(context));
+    }
+
+    public static void setupStatusBarIconColor(@NonNull Context context, boolean isLightToolbar) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (((AppCompatActivity) context).getWindow() == null) {
+                Log.e("ColorHelper", "setupStatusBarIconColor() getWindow() returns null");
+                return;
+            }
+
             View view = ((AppCompatActivity) context).getWindow().getDecorView();
             if (view != null) {
-                if (isLightToolbar(context)){
+                if (isLightToolbar){
                     view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                     return;
                 }
