@@ -68,7 +68,12 @@ public class ColorHelper {
     }
 
     @ColorInt
-    public static int getAttributeColor(@NonNull Context context, @AttrRes int attr) {
+    public static int getAttributeColor(Context context, @AttrRes int attr) {
+        if (context == null) {
+            Log.e("ColorHelper", "getAttributeColor() context is null");
+            return Color.WHITE;
+        }
+
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = context.getTheme();
         theme.resolveAttribute(attr, typedValue, true);
@@ -118,7 +123,12 @@ public class ColorHelper {
         return new ColorStateList(states, colors);
     }
 
-    public static boolean isLightToolbar(@NonNull Context context) {
+    public static boolean isLightToolbar(Context context) {
+        if (context == null) {
+            Log.e("ColorHelper", "isLightToolbar() context is null");
+            return false;
+        }
+
         int color = getAttributeColor(context, R.attr.colorPrimaryDark);
         int title = getTitleTextColor(color);
         return title < Color.WHITE;
