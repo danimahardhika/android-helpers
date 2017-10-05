@@ -18,7 +18,7 @@ package com.danimahardhika.android.helpers.permission;
  * limitations under the License.
  */
 
-public class PermissionCode {
+public abstract class PermissionCode {
 
     public static int STORAGE = 1;
     public static int LOCATION = 2;

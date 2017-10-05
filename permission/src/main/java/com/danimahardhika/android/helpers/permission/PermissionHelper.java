@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 
 /*
  * Android Helpers
@@ -31,6 +32,12 @@ public class PermissionHelper {
     public static void requestPermission(@NonNull Context context, @NonNull String[] permissions, int code) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ActivityCompat.requestPermissions((Activity) context, permissions, code);
+        }
+    }
+
+    public static void requestPermission(@NonNull Fragment fragment, @NonNull String[] permissions, int code) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            fragment.requestPermissions(permissions, code);
         }
     }
 
@@ -65,6 +72,14 @@ public class PermissionHelper {
         }
     }
 
+    public static void requestStorage(@NonNull Fragment fragment) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            fragment.requestPermissions(
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionCode.STORAGE);
+        }
+    }
+
     public static boolean isLocationGranted(@NonNull Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int coarse = ActivityCompat.checkSelfPermission(
@@ -80,6 +95,14 @@ public class PermissionHelper {
     public static void requestLocation(@NonNull Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION}, PermissionCode.LOCATION);
+        }
+    }
+
+    public static void requestLocation(@NonNull Fragment fragment) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            fragment.requestPermissions(
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                             Manifest.permission.ACCESS_FINE_LOCATION}, PermissionCode.LOCATION);
         }
