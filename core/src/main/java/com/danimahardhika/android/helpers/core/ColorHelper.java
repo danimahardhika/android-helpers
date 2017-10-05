@@ -123,15 +123,22 @@ public class ColorHelper {
         return new ColorStateList(states, colors);
     }
 
-    public static boolean isLightToolbar(Context context) {
-        if (context == null) {
-            Log.e("ColorHelper", "isLightToolbar() context is null");
-            return false;
-        }
+    public static ColorStateList getCheckedColorStateList(@ColorInt int unchecked, @ColorInt int checked) {
+        int[][] states = new int[][] {
+                new int[] {-android.R.attr.state_checked},
+                new int[] {android.R.attr.state_checked},
+        };
 
-        int color = getAttributeColor(context, R.attr.colorPrimaryDark);
-        int title = getTitleTextColor(color);
-        return title < Color.WHITE;
+        int[] colors = new int[] {
+                unchecked,
+                checked
+        };
+        return new ColorStateList(states, colors);
+    }
+
+    public static boolean isLightColor(@ColorInt int color) {
+        int title = ColorHelper.getTitleTextColor(color);
+        return title != Color.WHITE;
     }
 
     public static void setupStatusBarIconColor(Context context) {
@@ -139,7 +146,8 @@ public class ColorHelper {
             Log.e("ColorHelper", "setupStatusBarIconColor() context is null");
             return;
         }
-        setupStatusBarIconColor(context, isLightToolbar(context));
+        int color = getAttributeColor(context, R.attr.colorPrimaryDark);
+        setupStatusBarIconColor(context, isLightColor(color));
     }
 
     public static void setupStatusBarIconColor(Context context, boolean isLightToolbar) {

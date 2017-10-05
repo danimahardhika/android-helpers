@@ -7,6 +7,7 @@ import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 /*
  * Android Helpers
@@ -27,6 +28,8 @@ import java.util.Locale;
  */
 
 public class TimeHelper {
+
+    public static final String FORMAT_MINUTE_SECOND = "%02d:%02d";
 
     public static int minuteToMilli(int minute) {
         return minute * 60 * 1000;
@@ -97,5 +100,12 @@ public class TimeHelper {
     @NonNull
     private static SimpleDateFormat getDefaultShortDateTimeFormat() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    }
+
+    public static String getFormattedTime(String format, int millis) {
+        return String.format(Locale.getDefault(), format,
+                TimeUnit.MILLISECONDS.toMinutes(millis),
+                TimeUnit.MILLISECONDS.toSeconds(millis) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
     }
 }
