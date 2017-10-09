@@ -3,7 +3,6 @@ package com.danimahardhika.android.helpers.core;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -60,8 +59,8 @@ public class DrawableHelper {
     @Nullable
     public static Drawable getTintedDrawable(@NonNull Drawable drawable, @ColorInt int color) {
         try {
-            drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-            return drawable.mutate();
+            DrawableCompat.setTint(drawable, color);
+            return drawable;
         } catch (OutOfMemoryError e) {
             return null;
         }
