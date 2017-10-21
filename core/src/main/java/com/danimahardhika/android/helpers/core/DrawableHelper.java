@@ -60,7 +60,7 @@ public class DrawableHelper {
     public static Drawable getTintedDrawable(@NonNull Drawable drawable, @ColorInt int color) {
         try {
             DrawableCompat.setTint(drawable, color);
-            return drawable;
+            return drawable.mutate();
         } catch (OutOfMemoryError e) {
             return null;
         }
