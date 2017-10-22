@@ -60,14 +60,14 @@ public class TimeHelper {
         return getDisplayDate(datetime, simpleDateFormat) +", "+ getDisplayTime(datetime, simpleDateFormat);
     }
 
-    private static String getDisplayDate(String datetime, @NonNull SimpleDateFormat simpleDateFormat) {
+    public static String getDisplayDate(String datetime, @NonNull SimpleDateFormat simpleDateFormat) {
         Date date = parse(simpleDateFormat, datetime);
         SimpleDateFormat formatter =  new SimpleDateFormat(
                 getDefaultDisplayDateFormat(), Locale.getDefault());
         return formatter.format(date);
     }
 
-    private static String getDisplayTime(String datetime, @NonNull SimpleDateFormat simpleDateFormat) {
+    public static String getDisplayTime(String datetime, @NonNull SimpleDateFormat simpleDateFormat) {
         Date date = parse(simpleDateFormat, datetime);
         SimpleDateFormat formatter =  new SimpleDateFormat(
                 getDefaultDisplayTimeFormat(), Locale.getDefault());
@@ -75,7 +75,7 @@ public class TimeHelper {
     }
 
     @Nullable
-    private static Date parse(SimpleDateFormat simpleDateFormat, String datetime) {
+    public static Date parse(SimpleDateFormat simpleDateFormat, String datetime) {
         try {
             return simpleDateFormat.parse(datetime);
         } catch(Exception e){
@@ -93,12 +93,12 @@ public class TimeHelper {
     }
 
     @NonNull
-    private static SimpleDateFormat getDefaultLongDateTimeFormat() {
+    public static SimpleDateFormat getDefaultLongDateTimeFormat() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS", Locale.getDefault());
     }
 
     @NonNull
-    private static SimpleDateFormat getDefaultShortDateTimeFormat() {
+    public static SimpleDateFormat getDefaultShortDateTimeFormat() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
     }
 
