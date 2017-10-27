@@ -1,5 +1,6 @@
 package com.danimahardhika.android.helpers.core;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -13,7 +14,9 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
+import android.view.Window;
 import android.view.WindowManager;
 
 /*
@@ -81,10 +84,34 @@ public class WindowHelper {
         }
     }
 
-    public static void disableTranslucentNavigationBar(@NonNull Context context) {
+    public static void disableTransucentNavigationBar(@NonNull Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ((AppCompatActivity) context).getWindow().clearFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
+
+    public static void setTranslucentStatusBar(Context context, boolean translucent) {
+        if (context == null) {
+            Log.e("WindowHelper", "context is null");
+            return;
+        }
+
+        if (!(context instanceof Activity)) {
+            Log.e("WindowHelper", "context must be instance of activity");
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = ((Activity) context).getWindow();
+            if (translucent) {
+                window.clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                return;
+            }
+
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
 
