@@ -84,7 +84,7 @@ public class WindowHelper {
         }
     }
 
-    public static void disableTransucentNavigationBar(@NonNull Context context) {
+    public static void disableTranslucentNavigationBar(@NonNull Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ((AppCompatActivity) context).getWindow().clearFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
