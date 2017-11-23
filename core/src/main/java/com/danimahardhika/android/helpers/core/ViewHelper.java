@@ -128,7 +128,7 @@ public class ViewHelper {
     public static void setSearchViewSearchIcon(@Nullable View view, @Nullable Drawable drawable) {
         if (view == null) return;
 
-        ImageView searchIcon = (ImageView) view.findViewById(
+        ImageView searchIcon = view.findViewById(
                 android.support.v7.appcompat.R.id.search_mag_icon);
         if (searchIcon == null) return;
 
@@ -160,7 +160,7 @@ public class ViewHelper {
     public static void setSearchViewCloseIcon(@Nullable View view, @Nullable Drawable drawable) {
         if (view == null) return;
 
-        ImageView closeIcon = (ImageView) view.findViewById(
+        ImageView closeIcon = view.findViewById(
                 android.support.v7.appcompat.R.id.search_close_btn);
         if (closeIcon != null) {
             if (drawable == null) {
