@@ -27,7 +27,7 @@ dependencies {
     implementation('com.github.danimahardhika.android-helpers:core:-SNAPSHOT') {
         changing = true
     }
-    implementation('com.github.danimahardhika.android-helpers:animation:-SNAPSHOT) {
+    implementation('com.github.danimahardhika.android-helpers:animation:-SNAPSHOT') {
         changing = true
     }
     implementation('com.github.danimahardhika.android-helpers:license:-SNAPSHOT') {
